@@ -1,7 +1,7 @@
 import { MaterialIcons, Octicons } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { Alert, Image, Text, View, } from "react-native";
+import { Alert, Image, Text, View } from "react-native";
 import Logo from "../../assets/logo.png";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/input";
@@ -12,7 +12,7 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   async function getLogin() {
@@ -50,13 +50,14 @@ export default function Login() {
           IconRight={MaterialIcons}
           IconRightName="email"
         />
+
         <Input
           value={password}
           onChangeText={setPassword}
           title="SENHA"
+          secureTextEntry={!showPassword}
           IconRight={Octicons}
-          IconRightName={showPassword ? "eye-closed" : "eye"}
-          secureTextEntry={showPassword}
+          IconRightName={showPassword ? "eye" : "eye-closed"}
           onIconRightPress={() => setShowPassword(!showPassword)}
         />
       </View>

@@ -1,38 +1,40 @@
-import { StyleSheet } from "react-native";
+import { themas } from "@/src/global/themes";
+import { StyleSheet, Dimensions } from "react-native";
+
+const { width } = Dimensions.get("window");
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: "#fff",
     padding: 20,
+    alignItems: "center",
+    paddingTop: 90
   },
   titulo: {
-    fontSize: 26,
+    fontSize: 28,
     fontWeight: "bold",
-    color: "#2b6cb0",
-    marginBottom: 20,
+    color: themas.colors.primary,
+    marginBottom: 25,
     textAlign: "center",
   },
   input: {
+    width: width * 0.9,
     borderWidth: 1,
     borderColor: "#ccc",
-    borderRadius: 10,
-    padding: 12,
+    borderRadius: 12,
+    padding: 15,
     fontSize: 16,
     marginBottom: 15,
-  },
-  botaoArquivo: {
-    backgroundColor: "#e6e6e6",
-    padding: 12,
-    borderRadius: 10,
-    alignItems: "center",
-    marginBottom: 15,
+    backgroundColor: "#f9f9f9",
   },
   botaoEnviar: {
-    backgroundColor: "#2b6cb0",
+    width: width * 0.9,
+    backgroundColor: themas.colors.primary,
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 12,
     alignItems: "center",
+    marginVertical: 10,
   },
   textoBotao: {
     color: "#fff",
@@ -40,11 +42,41 @@ export const styles = StyleSheet.create({
     fontSize: 16,
   },
   voltar: {
-    marginTop: 20,
+    marginTop: 25,
     alignSelf: "center",
+    color: "#000000ff",
   },
   voltarTexto: {
-    color: "#2b6cb0",
+    color: "#000000ff",
     fontWeight: "600",
+    fontSize: 16,
+  },
+  clienteBox: {
+    width: width * 0.95,
+    padding: 20,
+    backgroundColor: "#f1f5f9",
+    borderRadius: 15,
+    marginTop: 20,
+    alignItems: "center",
+  },
+  clienteText: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  pdfBox: {
+    width: width * 0.85,
+    height: 80,
+    borderWidth: 2,
+    borderColor: "#ccc",
+    borderRadius: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 15,
+    backgroundColor: "#e2e8f0",
+  },
+  pdfText: {
+    color: "#555",
+    fontSize: 16,
+    textAlign: "center",
   },
 });
