@@ -1,6 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View, Alert } from "react-native";
 import { style } from "./style";
 
 type RootStackParamList = {
@@ -40,6 +40,13 @@ export default function Home({ navigation }: { navigation: HomeScreenNavigationP
           onPress={() => navigation.navigate("Hotel")}
         >
           <Text style={style.buttonText}>Controle de Hotel</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={style.button}
+          onPress={() => Alert.alert("Configurações", "Botão de exemplo clicado!")}
+        >
+          <Text style={style.buttonText}>Configurações</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

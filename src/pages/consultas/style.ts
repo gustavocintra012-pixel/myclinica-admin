@@ -1,54 +1,103 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+import { themas } from "../../global/themes";
 
-export const styles = StyleSheet.create({
+const WINDOW_HEIGHT = Dimensions.get("window").height;
+
+const style = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    padding: 20,
+    backgroundColor: "#FFF",
   },
-  titulo: {
-    fontSize: 26,
+
+  header: {
+    width: "100%",
+    height: WINDOW_HEIGHT / 5,
+    backgroundColor: themas.colors.primary,
+    paddingHorizontal: 20,
+    paddingTop: 60,
+    justifyContent: "center",
+  },
+  headerTitle: {
+    fontSize: 24,
+    color: "#fff",
     fontWeight: "bold",
-    color: "#2b6cb0",
-    marginBottom: 20,
-    textAlign: "center",
+    textAlign: 'center',
   },
-  card: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+
+  /* === calendário / dias === */
+  calendarContainer: {
+    marginTop: 10,
+    height: 140,
+  },
+  scrollDates: {
+    paddingHorizontal: 10,
     alignItems: "center",
-    backgroundColor: "#f2f2f2",
-    padding: 15,
-    borderRadius: 12,
-    marginBottom: 15,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
   },
-  texto: {
-    fontSize: 16,
+  dateBox: {
+    width: 110,
+    height: 110,
+    borderRadius: 16,
+    backgroundColor: "#f4f4f4",
+    marginRight: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 8,
+    borderWidth: 0,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  selectedDateBox: {
+    borderWidth: 2,
+    borderColor: themas.colors.primary,
+    backgroundColor: "#E6F0FF",
+  },
+
+  dayText: {
+    fontSize: 14,
+    fontWeight: "700",
+    marginBottom: 6,
     color: "#333",
   },
-  status: {
-    fontWeight: "bold",
-    marginTop: 5,
+
+  dateText: {
+    fontSize: 20,
+    fontWeight: "800",
+    color: "#333",
   },
-  botao: {
-    backgroundColor: "#2b6cb0",
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+
+  /* === horas === */
+  hoursContainer: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 18,
+  },
+  hourButton: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+
+  confirmButton: {
+    backgroundColor: themas.colors.primary,
+    padding: 15,
     borderRadius: 8,
+    alignItems: "center",
   },
-  textoBotao: {
+  confirmButtonText: {
     color: "#fff",
     fontWeight: "bold",
   },
-  voltar: {
-    marginTop: 10,
-    alignSelf: "center",
-  },
-  voltarTexto: {
-    color: "#2b6cb0",
-    fontWeight: "600",
-  },
 });
+
+export default style;

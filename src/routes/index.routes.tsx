@@ -1,11 +1,11 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 
-import Consultas from "../pages/consultas";
-import Exames from "../pages/exams";
-import Home from "../pages/home";
 import Login from "../pages/login";
 import Cadastro from "../pages/register";
+import Home from "../pages/home";
+import Consultas from "../pages/consultas";
+import Exames from "../pages/exams";
 
 const Stack = createStackNavigator();
 
