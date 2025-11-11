@@ -3,6 +3,8 @@ import { View, Text, FlatList, TouchableOpacity, Alert } from "react-native";
 import style from "./style";
 import { getFirestore, collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import app from "../../firebase/config";
+import { useNavigation } from "@react-navigation/native"; // ✅ adicionado para navegação
+import { themas } from "@/src/global/themes";
 
 interface Hour {
   id: string;
@@ -19,6 +21,7 @@ interface Day {
 
 export default function Consultas() {
   const db = getFirestore(app);
+  const navigation = useNavigation(); // ✅ hook de navegação
   const [dias, setDias] = useState<Day[]>([]);
   const [horariosPorDia, setHorariosPorDia] = useState<{ [key: string]: Hour[] }>({});
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
@@ -85,6 +88,19 @@ export default function Consultas() {
 
   return (
     <View style={style.container}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={{
+          backgroundColor: themas.colors.primary,
+          padding: 10,
+          borderRadius: 8,
+          alignSelf: "flex-start",
+          margin: 10,
+        }}
+      >
+        <Text style={{ color: "#fff", fontWeight: "bold" }}>Voltar</Text>
+      </TouchableOpacity>
+
       <View style={style.header}>
         <Text style={style.headerTitle}>Consultas Agendadas</Text>
       </View>
@@ -92,7 +108,7 @@ export default function Consultas() {
       <View style={style.calendarContainer}>
         <FlatList
           data={dias}
-          horizontal
+          horizontal  
           keyExtractor={item => item.id}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={style.scrollDates}
@@ -110,7 +126,6 @@ export default function Consultas() {
 
       {selectedDay && horariosPorDia[selectedDay] && (
         <View style={{ flex: 1 }}>
-          {/* Horários fixos */}
           <View style={style.hoursContainer}>
             <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
               {horariosPorDia[selectedDay].map(item => (

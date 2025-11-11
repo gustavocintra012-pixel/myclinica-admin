@@ -1,127 +1,170 @@
-import { Feather } from "@expo/vector-icons";
-import React, { useState } from "react";
-import { Alert, FlatList, Text, TouchableOpacity, View } from "react-native";
-import { style } from "./style";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Alert,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
+import { db } from "../../firebase/config";
+import { collection, onSnapshot, updateDoc, doc } from "firebase/firestore";
+import styles from "./style";
+import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 
-interface Reserva {
+type Booking = {
   id: string;
-  pet: string;
-  data: string;
-  horario: string;
-}
+  petName: string;
+  ownerName: string;
+  ownerPhone: string;
+  checkInDate: string;
+  checkOutDate: string;
+  specialNeeds: string;
+  petWeight: string;
+  roomType: string;
+  roomPrice: string;
+  roomCapacity: string;
+  status: "Reservado" | "Concluído" | "Cancelado";
+  bookedAt: string;
+};
 
-interface Dia {
-  id: string;
-  data: string;
-}
+const AdminHotelScreen: React.FC = () => {
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export default function Hotel() {
-  // Lista de dias disponíveis
-  const [dias, setDias] = useState<Dia[]>([
-    { id: "1", data: "10/11/2025" },
-    { id: "2", data: "11/11/2025" },
-    { id: "3", data: "12/11/2025" },
-  ]);
+  useEffect(() => {
+    const q = collection(db, "hotel_reservas");
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const data: Booking[] = snapshot.docs.map((docSnap) => ({
+        id: docSnap.id,
+        ...docSnap.data(),
+      })) as Booking[];
+      setBookings(data);
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
 
-  // Reservas existentes
-  const [reservas, setReservas] = useState<Reserva[]>([
-    { id: "1", pet: "Rex", data: "10/11/2025", horario: "14:00" },
-    { id: "2", pet: "Luna", data: "12/11/2025", horario: "10:00" },
-  ]);
+  const updateStatus = async (bookingId: string, newStatus: string) => {
+    try {
+      await updateDoc(doc(db, "hotel_reservas", bookingId), { status: newStatus });
+      Alert.alert("✅ Status atualizado com sucesso!");
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível atualizar o status da reserva.");
+      console.error(error);
+    }
+  };
 
-  const [selectedDay, setSelectedDay] = useState<string | null>(null);
-
-  function removerReserva(id: string) {
-    Alert.alert("Excluir", "Deseja excluir esta reserva?", [
-      { text: "Cancelar" },
-      {
-        text: "Excluir",
-        onPress: () =>
-          setReservas((prev) => prev.filter((r) => r.id !== id)),
-      },
-    ]);
-  }
-
-  return (
-    <View style={style.container}>
-      <View style={style.header}>
-        <Text style={style.title}>Painel do Hotel 🏨</Text>
+  const renderBookingCard = (item: Booking) => (
+    <View
+      style={[
+        styles.bookingCard,
+        item.status === "Reservado"
+          ? styles.reservedCard
+          : item.status === "Concluído"
+          ? styles.completedCard
+          : styles.cancelledCard,
+      ]}
+    >
+      <View style={styles.cardHeader}>
+        <Text style={styles.petName}>
+          🐾 {item.petName} ({item.petWeight})
+        </Text>
+        <Text style={styles.statusText}>{item.status}</Text>
       </View>
 
-      {/* Seleção de dia */}
-      <View style={{ flexDirection: "row", marginVertical: 10 }}>
-        {dias.map((dia) => (
+      <Text style={styles.roomType}>🏨 {item.roomType}</Text>
+
+      <View style={styles.infoRow}>
+        <FontAwesome5 name="user" size={14} color="#333" />
+        <Text style={styles.infoText}> {item.ownerName}</Text>
+      </View>
+
+      <View style={styles.infoRow}>
+        <MaterialIcons name="phone" size={14} color="#333" />
+        <Text style={styles.infoText}> {item.ownerPhone}</Text>
+      </View>
+
+      <View style={styles.infoRow}>
+        <MaterialIcons name="event" size={14} color="#333" />
+        <Text style={styles.infoText}>
+          {" "}
+          {item.checkInDate} → {item.checkOutDate}
+        </Text>
+      </View>
+
+      {item.specialNeeds ? (
+        <View style={styles.infoRow}>
+          <MaterialIcons name="healing" size={14} color="#333" />
+          <Text style={styles.infoText}> {item.specialNeeds}</Text>
+        </View>
+      ) : null}
+
+      <Text style={styles.bookedAt}>📅 Reservado em: {item.bookedAt}</Text>
+
+      {item.status === "Reservado" && (
+        <View style={styles.actionButtons}>
           <TouchableOpacity
-            key={dia.id}
-            style={{
-              padding: 10,
-              backgroundColor: selectedDay === dia.id ? "#4CAF50" : "#ccc",
-              marginRight: 8,
-              borderRadius: 8,
-            }}
-            onPress={() => setSelectedDay(dia.id)}
+            style={[styles.actionButton, styles.completeButton]}
+            onPress={() => updateStatus(item.id, "Concluído")}
           >
-            <Text style={{ color: "#fff" }}>{dia.data}</Text>
+            <Text style={styles.buttonText}>Concluir</Text>
           </TouchableOpacity>
-        ))}
-      </View>
-
-      {/* Horários fixos do dia selecionado */}
-      {selectedDay && (
-        <View style={{ marginBottom: 20 }}>
-          <Text style={{ fontWeight: "bold", fontSize: 18, marginBottom: 10 }}>
-            Horários do dia
-          </Text>
-          <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
-            {["08:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00"].map((hora) => {
-              const reserva = reservas.find(r => r.data === dias.find(d => d.id === selectedDay)?.data && r.horario === hora);
-              return (
-                <View
-                  key={hora}
-                  style={{
-                    width: "23%",
-                    paddingVertical: 15,
-                    marginBottom: 10,
-                    alignItems: "center",
-                    borderRadius: 12,
-                    backgroundColor: reserva ? "#D9534F" : "#C8F7C5",
-                  }}
-                >
-                  <Text style={{ fontWeight: "bold", color: "#fff" }}>{hora}</Text>
-                  <Text style={{ color: "#fff" }}>{reserva ? "Ocupado" : "Livre"}</Text>
-                </View>
-              );
-            })}
-          </View>
-
-          {/* Lista de reservas do dia */}
-          <Text style={{ fontWeight: "bold", fontSize: 18, marginTop: 20, marginBottom: 10 }}>
-            Reservas do dia
-          </Text>
-          <FlatList
-            data={reservas.filter(r => r.data === dias.find(d => d.id === selectedDay)?.data)}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  backgroundColor: "#f2f2f2",
-                  padding: 12,
-                  borderRadius: 8,
-                  marginBottom: 8,
-                }}
-              >
-                <Text style={{ fontWeight: "bold" }}>{item.horario}</Text>
-                <Text>{item.pet}</Text>
-                <TouchableOpacity onPress={() => removerReserva(item.id)}>
-                  <Feather name="trash-2" size={20} color="#D9534F" />
-                </TouchableOpacity>
-              </View>
-            )}
-          />
+          <TouchableOpacity
+            style={[styles.actionButton, styles.cancelButton]}
+            onPress={() => updateStatus(item.id, "Cancelado")}
+          >
+            <Text style={styles.buttonText}>Cancelar</Text>
+          </TouchableOpacity>
         </View>
       )}
     </View>
   );
-}
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#007bff" />
+        <Text>Carregando reservas...</Text>
+      </View>
+    );
+  }
+
+  const groupedBookings = {
+    Reservado: bookings.filter((b) => b.status === "Reservado"),
+    Concluído: bookings.filter((b) => b.status === "Concluído"),
+    Cancelado: bookings.filter((b) => b.status === "Cancelado"),
+  };
+
+  return (
+    <ScrollView style={styles.container}>
+      <Text style={styles.title}>📋 Painel de Reservas</Text>
+
+      {Object.entries(groupedBookings).map(([status, list]) => (
+        <View key={status} style={styles.section}>
+          <Text style={styles.sectionTitle}>
+            {status === "Reservado"
+              ? "🕒 Reservas Ativas"
+              : status === "Concluído"
+              ? "✅ Estádias Concluídas"
+              : "❌ Canceladas"}
+          </Text>
+
+          {list.length === 0 ? (
+            <Text style={styles.emptyText}>Nenhuma reserva {status.toLowerCase()}.</Text>
+          ) : (
+            <FlatList
+              data={list}
+              renderItem={({ item }) => renderBookingCard(item)}
+              keyExtractor={(item) => item.id}
+              scrollEnabled={false}
+            />
+          )}
+        </View>
+      ))}
+    </ScrollView>
+  );
+};
+
+export default AdminHotelScreen;

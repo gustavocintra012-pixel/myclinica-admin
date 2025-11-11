@@ -1,130 +1,113 @@
 import { StyleSheet } from "react-native";
-import { themas } from "../../global/themes";
 
-export const style = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f9fafc",
-    paddingHorizontal: 20,
-    paddingTop: 50,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    backgroundColor: "#f5f7fb",
+    padding: 16,
   },
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    color: themas.colors.primary,
-  },
-  subtitle: {
-    marginTop: 5,
-    color: "#555",
-    fontSize: 15,
-  },
-  headerButton: {
-    flexDirection: "row",
-    backgroundColor: themas.colors.primary,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 8,
-    alignItems: "center",
-    gap: 6,
-  },
-  headerButtonText: {
-    color: "#fff",
-    fontWeight: "600",
-  },
-  card: {
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    marginTop: 15,
-    padding: 15,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOpacity: 0.05,
-    shadowRadius: 3,
-    elevation: 3,
-  },
-  cardInfo: {
-    flex: 1,
-  },
-  petName: {
-    fontSize: 17,
-    fontWeight: "600",
-    color: "#333",
-  },
-  info: {
-    color: "#666",
-    fontSize: 14,
-  },
-  deleteButton: {
-    backgroundColor: themas.colors.primary,
-    padding: 8,
-    borderRadius: 8,
-  },
-  addButton: {
-    position: "absolute",
-    bottom: 25,
-    right: 25,
-    backgroundColor: themas.colors.primary,
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
-    elevation: 5,
-  },
-  modalContainer: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalBox: {
-    width: "85%",
-    backgroundColor: "#fff",
-    borderRadius: 15,
-    padding: 20,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: themas.colors.primary,
-    marginBottom: 10,
+    marginBottom: 20,
     textAlign: "center",
   },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 8,
-    padding: 10,
-    marginVertical: 5,
+  section: {
+    marginBottom: 30,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "600",
+    marginBottom: 10,
     color: "#333",
   },
-  modalButtons: {
+  bookingCard: {
+    borderRadius: 12,
+    padding: 15,
+    marginBottom: 10,
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  reservedCard: {
+    borderLeftWidth: 6,
+    borderLeftColor: "#007bff",
+  },
+  completedCard: {
+    borderLeftWidth: 6,
+    borderLeftColor: "green",
+  },
+  cancelledCard: {
+    borderLeftWidth: 6,
+    borderLeftColor: "red",
+  },
+  cardHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 15,
+    alignItems: "center",
+    marginBottom: 5,
   },
-  btn: {
+  petName: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  statusText: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#666",
+  },
+  roomType: {
+    fontSize: 15,
+    marginBottom: 6,
+    color: "#444",
+  },
+  infoRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 2,
+  },
+  infoText: {
+    fontSize: 14,
+    marginLeft: 5,
+  },
+  bookedAt: {
+    marginTop: 6,
+    fontSize: 13,
+    color: "#777",
+  },
+  actionButtons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
+  actionButton: {
     flex: 1,
-    marginHorizontal: 5,
-    paddingVertical: 10,
+    paddingVertical: 8,
     borderRadius: 8,
     alignItems: "center",
+    marginHorizontal: 5,
   },
-  btnCancel: {
-    backgroundColor: "#ccc",
+  completeButton: {
+    backgroundColor: "green",
   },
-  btnConfirm: {
-    backgroundColor: themas.colors.primary,
+  cancelButton: {
+    backgroundColor: "red",
   },
-  btnText: {
+  buttonText: {
     color: "#fff",
-    fontWeight: "600",
+    fontWeight: "bold",
+  },
+  emptyText: {
+    color: "#777",
+    fontStyle: "italic",
+    marginBottom: 10,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

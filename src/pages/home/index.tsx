@@ -36,10 +36,10 @@ export default function Home({ navigation }: { navigation: HomeScreenNavigationP
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={style.button}
+          style={style.botao}
           onPress={() => navigation.navigate("Hotel")}
         >
-          <Text style={style.buttonText}>Controle de Hotel</Text>
+          <Text style={style.textoBotao}>Hotel</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

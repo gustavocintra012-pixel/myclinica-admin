@@ -56,4 +56,21 @@ export const style = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
+  botao: {
+  backgroundColor: "#007BFF",
+  paddingVertical: 12,
+  paddingHorizontal: 20,
+  borderRadius: 10,
+  alignItems: "center",
+  justifyContent: "center",
+  marginVertical: 8,
+  width: "80%",
+},
+
+textoBotao: {
+  color: "#fff",
+  fontSize: 18,
+  fontWeight: "bold",
+},
+
 });
