@@ -57,14 +57,14 @@ export const style = StyleSheet.create({
     fontWeight: "bold",
   },
   botao: {
-  backgroundColor: "#007BFF",
-  paddingVertical: 12,
-  paddingHorizontal: 20,
-  borderRadius: 10,
-  alignItems: "center",
-  justifyContent: "center",
-  marginVertical: 8,
-  width: "80%",
+  backgroundColor: themas.colors.primary,
+    width: "80%",
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 20,
+    elevation: 2,
 },
 
 textoBotao: {

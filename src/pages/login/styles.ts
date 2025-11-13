@@ -34,7 +34,8 @@ export const style = StyleSheet.create({
     text:{
         fontWeight:'bold',
         marginTop:30,
-        fontSize:40
+        fontSize:40,
+        textAlign: "center", 
     },
     button:{
         width:200,

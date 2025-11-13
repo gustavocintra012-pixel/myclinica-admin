@@ -1,6 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
-import { Text, TouchableOpacity, View, Alert } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { style } from "./style";
 
 type RootStackParamList = {
@@ -10,11 +10,19 @@ type RootStackParamList = {
   Consultas: undefined;
   Exames: undefined;
   Hotel: undefined;
+  Settings: undefined; // ← ADICIONE ESTA ROTA NO SEU NAVIGATOR TAMBÉM
 };
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
+type HomeScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "Home"
+>;
 
-export default function Home({ navigation }: { navigation: HomeScreenNavigationProp }) {
+export default function Home({
+  navigation,
+}: {
+  navigation: HomeScreenNavigationProp;
+}) {
   return (
     <View style={style.container}>
       <Text style={style.title}>Painel do Administrador</Text>
@@ -44,7 +52,7 @@ export default function Home({ navigation }: { navigation: HomeScreenNavigationP
 
         <TouchableOpacity
           style={style.button}
-          onPress={() => Alert.alert("Configurações", "Botão de exemplo clicado!")}
+          onPress={() => navigation.navigate("Settings")}
         >
           <Text style={style.buttonText}>Configurações</Text>
         </TouchableOpacity>

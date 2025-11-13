@@ -7,6 +7,8 @@ import Home from "../pages/home";
 import Consultas from "../pages/consultas";
 import Exames from "../pages/exams";
 import Hotel from "../pages/hotel";
+import Settings from "../pages/settings";
+
 
 const Stack = createStackNavigator();
 
@@ -25,6 +27,7 @@ export default function Routes() {
       <Stack.Screen name="Consultas" component={Consultas} />
       <Stack.Screen name="Exames" component={Exames} />
       <Stack.Screen name="Hotel" component={Hotel} options={{ headerShown: false }}/>
+      <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }}/>
     </Stack.Navigator>
   );
 }
